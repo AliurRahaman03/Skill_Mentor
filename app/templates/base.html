@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <style>
+      /* helper to fade-out flash alerts before removing from DOM */
+      .fade-out {
+        opacity: 0 !important;
+        transition: opacity 0.5s ease;
+      }
+    </style>
+    <title>{% block title %}Skill Mentor{% endblock %}</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth_routes.login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('skill_routes.get_skills') }}">My Skills</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth_routes.logout') }}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    {% block content %} {% endblock %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+      integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Auto-dismiss flash alerts after 5 seconds
+      document.addEventListener('DOMContentLoaded', function () {
+        const ALERT_DISPLAY_MS = 5000; // 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        if (!alerts || alerts.length === 0) return;
+
+        // After a delay, fade them out and remove from DOM after transition
+        setTimeout(() => {
+          alerts.forEach((el) => {
+            // add fade-out class to trigger CSS transition
+            el.classList.add('fade-out');
+            // remove element from DOM when transition finishes
+            el.addEventListener('transitionend', () => {
+              try { el.remove(); } catch (e) { /* ignore */ }
+            }, { once: true });
+          });
+        }, ALERT_DISPLAY_MS);
+      });
+    </script>
+  </body>
+</html>

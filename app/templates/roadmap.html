@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Roadmap{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">{{ roadmap.title }}</h1>
+        
+        <div class="row">
+            {% for week, tasks in roadmap.weeks.items() %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0">{{ week|capitalize }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                {# Support two possible shapes returned by the AI:
+                                   1) tasks is a list of strings -> iterate and print
+                                   2) tasks is a mapping/dict -> iterate key/value pairs and print key + values
+                                #}
+                                {% if tasks is mapping %}
+                                    {% for key, val in tasks.items() %}
+                                        <li class="list-group-item">
+                                            <strong>{{ key.replace('_', ' ')|title }}:</strong>
+                                            {% if val is sequence and val is not string %}
+                                                <ul class="mt-2">
+                                                    {% for item in val %}
+                                                        <li>{{ item }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                {{ val }}
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for task in tasks %}
+                                        <li class="list-group-item">{{ task|title }}</li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="mt-4">
+            <a href="{{ url_for('skill_routes.get_skills') }}" class="btn btn-primary">
+                ← Back to Skills
+            </a>
+        </div>
+    </div>
+{% endblock %}
+

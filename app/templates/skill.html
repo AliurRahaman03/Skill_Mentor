@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Skill Page{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class="alert alert-info">{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="container mt-4">
+        <h2>Add New Skill</h2>
+        <form action="{{ url_for('skill_routes.add_skills') }}" method="post" class="mb-4">
+            <div class="form-group">
+                <label for="skill_name">Skill Name:</label>
+                <input type="text" class="form-control" id="skill_name" name="skill_name" required>
+            </div>
+            
+            <div class="form-group mt-3">
+                <label>Skill Level:</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="beginner" name="level" value="beginner" required>
+                    <label class="form-check-label" for="beginner">Beginner</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="intermediate" name="level" value="intermediate">
+                    <label class="form-check-label" for="intermediate">Intermediate</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="advanced" name="level" value="advanced">
+                    <label class="form-check-label" for="advanced">Advanced</label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mt-3">Add Skill</button>
+        </form>
+
+        <h2>Your Skills</h2>
+        {% if skills %}
+            <div class="list-group">
+            {% for skill in skills %}
+                <div class="list-group-item">
+                    <h5 class="mb-1">{{ skill.skill_name }}</h5>
+                    <span class="badge bg-primary">{{ skill.level }}</span> 
+                    <form action="{{ url_for('skill_routes.remove', id=skill.id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger mt-1">Remove</button>
+                    </form>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p class="alert alert-info">No skills added yet.</p>
+        {% endif %}
+
+        <div class="mt-5">
+            <h2>Generate Learning Roadmap</h2>
+            <form action="{{ url_for('ai_routes.generate_roadmap_route') }}" method="POST" class="mt-3">
+                <div class="form-group">
+                    <label for="target_role">Target Role:</label>
+                    <input type="text" class="form-control" id="target_role" name="target_role" 
+                           placeholder="e.g., Full Stack Developer, Data Scientist" required>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">
+                    <i class="bi bi-brain"></i> 🧠 Generate AI Roadmap
+                </button>
+            </form>
+        </div>
+    </div>
+    
+{% endblock %}
