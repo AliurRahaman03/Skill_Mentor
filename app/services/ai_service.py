@@ -10,7 +10,7 @@ who currently knows {', '.join(skills)} and wants to become a {target_role}.
 Return JSON like: {{ "title": "...", "weeks": {{ "week_1": [...], ... }} }}
 """
     response = client.chat.completions.create(
-        model="openrouter/andromeda-alpha",  # Using more widely available model
+        model="openai/gpt-5-image-mini",  # Using more widely available model
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3,
     )
