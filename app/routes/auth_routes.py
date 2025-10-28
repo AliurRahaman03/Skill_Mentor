@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 bp = Blueprint("auth_routes", __name__)
-bp.permanent_session_lifetime = timedelta(minutes=5)
+bp.permanent_session_lifetime = timedelta(minutes=1440)
 
 @bp.route('/')
 def home():
