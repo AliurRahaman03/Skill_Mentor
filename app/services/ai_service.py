@@ -1,7 +1,8 @@
+import os
 from openai import OpenAI
 
-client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key="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")
-
+client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=os.getenv(OPENAI_API_KEY))
+#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
 def generate_roadmap(user_name, skills, target_role="Full Stack Developer"):
     prompt = f"""
 You are an expert tech mentor. Create a 6-week learning roadmap for {user_name},
