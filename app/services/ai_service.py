@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key="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")
+client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key="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")
 
 def generate_roadmap(user_name, skills, target_role="Full Stack Developer"):
     prompt = f"""
